@@ -1,1 +1,2 @@
 add_executable(ad_snark main.cpp)
+target_link_libraries(ad_snark ethsnarks_common)
