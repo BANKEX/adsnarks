@@ -1,0 +1,1 @@
+add_executable(ad_snark main.cpp)
