@@ -47,7 +47,7 @@ prover with the median index from outside (currently it's hardcoded)
     1. support m-of-n case. For that one should add a flag to eddsa gadget and condition 
     some constraints on that flag
     2. add timestamps/rounds to the signatures
-    3. improve signature gadget
+    3. improve signature gadget (security, circuit-friendly hash)    
 3. Smart-Contract
     1. add public key management       
     2. add public inputs packing
@@ -58,6 +58,6 @@ prover with the median index from outside (currently it's hardcoded)
     4. introduce CI
     5. readable signatures file
     6. DEBUG profile
-    7. document the circuit
+    7. document the circuit, measure performance
     8. measure gas consumption    
 
