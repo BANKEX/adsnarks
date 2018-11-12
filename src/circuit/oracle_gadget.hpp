@@ -10,6 +10,7 @@
 #include <jubjub/eddsa.hpp>
 #include <gadgets/sha256_full.cpp>
 #include <libsnark/gadgetlib1/gadgets/basic_gadgets.hpp>
+#include "median_gadget.hpp"
 
 namespace ethsnarks {
 
@@ -23,9 +24,7 @@ namespace ethsnarks {
         std::vector<jubjub::eddsa<HashT>> signature_verifiers;
         std::vector<VariableT> packed_messages;
         std::vector<libsnark::packing_gadget<FieldT>> packers;
-        VariableArrayT less;
-        VariableArrayT less_or_eq;
-        std::vector<libsnark::comparison_gadget<FieldT>> comparators;
+        std::shared_ptr<median_gadget> _median_gadget;
 
     public:
         const size_t n;

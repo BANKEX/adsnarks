@@ -1,4 +1,4 @@
-add_library(adsnarks STATIC circuit/oracle_gadget.cpp circuit/oracle_protoboard.cpp)
+add_library(adsnarks STATIC circuit/oracle_gadget.cpp circuit/oracle_protoboard.cpp circuit/median_gadget.cpp)
 target_link_libraries(adsnarks ethsnarks_common ethsnarks_jubjub)
 
 add_executable(generator generator.cpp)
