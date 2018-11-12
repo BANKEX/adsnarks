@@ -78,7 +78,7 @@ namespace ethsnarks {
             packers[i].generate_r1cs_witness_from_bits();
         }
 
-        this->pb.val(median) = this->pb.val(packed_messages[0]);
+        this->pb.val(median) = this->pb.val(packed_messages[1]);
 
         for (size_t i = 0; i < n; i++) {
             comparators[i].generate_r1cs_witness();

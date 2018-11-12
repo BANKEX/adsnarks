@@ -9,6 +9,8 @@
 int main() {
     ethsnarks::ppT::init_public_params();
 
+    const size_t n = 3;
+
     libsnark::r1cs_gg_ppzksnark_zok_verification_key<ethsnarks::ppT> vk;
     std::ifstream vk_dump("../keys/libsnark/vk");
     vk_dump >> vk;
@@ -18,12 +20,15 @@ int main() {
     proof_dump >> proof;
 
     std::ifstream file("../keys/signature");
-    std::string S_bin, message_bin, pk_x_bin, pk_y_bin, r_x_bin, r_y_bin;
-    file >> S_bin >> message_bin >> pk_x_bin >> pk_y_bin >> r_x_bin >> r_y_bin;
+    std::string S_bin, message_bin, pk_x_bin, pk_y_bin, r_x_bin, r_y_bin, pk;
+    for (size_t i = 0; i < n; i++) {
+        file >> S_bin >> message_bin >> pk_x_bin >> pk_y_bin >> r_x_bin >> r_y_bin;
+        pk += pk_x_bin + pk_y_bin;
+    }
 
     std::vector<ethsnarks::FieldT> public_input;
-    public_input.emplace_back(123); //TODO
-    for (auto b : libff::pack_bit_vector_into_field_element_vector<ethsnarks::FieldT>(from_binary_string(pk_x_bin + pk_y_bin))) {
+    public_input.emplace_back(345); //TODO
+    for (auto b : libff::pack_bit_vector_into_field_element_vector<ethsnarks::FieldT>(from_binary_string(pk))) {
         public_input.emplace_back(b);
     }
 

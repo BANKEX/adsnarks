@@ -18,13 +18,14 @@ def sign(value, sk):
     return R, S
 
 if __name__ == "__main__":
-    value = 123
-    sk, pk = keypair()
-    R, S = sign(value, sk)
+    values = [123, 345, 567]
     with open('keys/signature', 'w') as f:
-        print(toBinaryString(S)[::-1], file = f)
-        print(toBinaryString(value), file = f)
-        print(toBinaryString(pk[0]), file = f)
-        print(toBinaryString(pk[1]), file = f)
-        print(toBinaryString(R[0]), file = f)
-        print(toBinaryString(R[1]), file = f)
+        for value in values:
+            sk, pk = keypair()
+            R, S = sign(value, sk)
+            print(toBinaryString(S)[::-1], file = f)
+            print(toBinaryString(value), file = f)
+            print(toBinaryString(pk[0]), file = f)
+            print(toBinaryString(pk[1]), file = f)
+            print(toBinaryString(R[0]), file = f)
+            print(toBinaryString(R[1]), file = f)
