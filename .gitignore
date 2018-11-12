@@ -1,3 +1,5 @@
 .idea
 cmake-build-debug
 bin
+build
+src/eddsa/__pycache__
