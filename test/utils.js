@@ -13,3 +13,11 @@ exports.flatten_vk = (vk) => {
         flatten_list(vk.gammaABC)
     ];
 };
+
+exports.flatten_proof = (proof) => {
+    return flatten_list([
+        proof.A,
+        flatten_list(proof.B),
+        proof.C
+    ]);
+};
