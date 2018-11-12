@@ -1,8 +1,14 @@
 from sapling_utils import i2lebsp
 from ed25519 import publickey, signature, checkvalid
+from random import randint
 
 def toBinaryString(x):
     return ''.join(str(c) for c in i2lebsp(256, x))
+
+def keypair():
+    sk = hex(randint(16 ** 127, 16 ** 128 - 1))[2:]
+    pk = publickey(sk)
+    return sk, pk
 
 def sign(value, sk):
     pk = publickey(sk)
@@ -12,12 +18,9 @@ def sign(value, sk):
     return R, S
 
 if __name__ == "__main__":
-
     value = 123
-    sk = "123123"
+    sk, pk = keypair()
     R, S = sign(value, sk)
-    pk = publickey(sk)
-
     with open('keys/signature', 'w') as f:
         print(toBinaryString(S)[::-1], file = f)
         print(toBinaryString(value), file = f)
