@@ -1,5 +1,5 @@
 #include <fstream>
-#include "oracle_protoboard.hpp"
+#include "circuit/oracle_protoboard.hpp"
 #include "utils.cpp"
 
 int main() {

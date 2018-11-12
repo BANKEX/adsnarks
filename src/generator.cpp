@@ -1,5 +1,5 @@
 #include <fstream>
-#include "oracle_protoboard.hpp"
+#include "circuit/oracle_protoboard.hpp"
 
 int main() {
     ethsnarks::ppT::init_public_params();
