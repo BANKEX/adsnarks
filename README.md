@@ -1,3 +1,4 @@
+# adsnarks
 ```git submodule update --init --recursive```
 
 `python3 src/eddsa/generate.py <N>` populates `keys/signature` with N random signatures to be used for testing.
