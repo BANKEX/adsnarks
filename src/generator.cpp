@@ -5,7 +5,7 @@
 int main() {
     ethsnarks::ppT::init_public_params();
 
-    const size_t n = 3;
+    const size_t n = 3; //TODO: hardcoded
 
     ethsnarks::oracle_protoboard pb(n);
 
