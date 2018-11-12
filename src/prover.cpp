@@ -1,6 +1,7 @@
 #include <fstream>
 #include "circuit/oracle_protoboard.hpp"
 #include "utils.cpp"
+#include <export.hpp>
 
 int main() {
     ethsnarks::ppT::init_public_params();
@@ -42,6 +43,8 @@ int main() {
 
     std::ofstream proof_dump("../keys/libsnark/proof");
     proof_dump << proof;
+
+    ethsnarks::proof2json_file(proof, pb.primary_input(), "../keys/ethsnarks/proof.json");
 
     return 0;
 }
