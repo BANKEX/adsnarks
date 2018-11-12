@@ -1,10 +1,11 @@
 #include <fstream>
 #include "circuit/oracle_protoboard.hpp"
+#include <export.hpp>
 
 int main() {
     ethsnarks::ppT::init_public_params();
 
-    const size_t n = 1;
+    const size_t n = 3;
 
     ethsnarks::oracle_protoboard pb(n);
 
@@ -23,6 +24,8 @@ int main() {
 
     std::ofstream vk_dump("../keys/libsnark/vk");
     vk_dump << keypair.vk;
+
+    ethsnarks::vk2json_file(keypair.vk, "../keys/ethsnarks/vk.json");
 
     return 0;
 }
