@@ -13,9 +13,9 @@ int main() {
     pb.generate_r1cs_constraints();
 
     std::ifstream file("../keys/signature");
-    std::string S_bin, message_bin, pk_x_bin, pk_y_bin, r_x_bin, r_y_bin;
+    std::string message_bin, pk_x_bin, pk_y_bin, r_x_bin, r_y_bin, S_bin;
     for (size_t i = 0; i < n; i++) {
-        file >> S_bin >> message_bin >> pk_x_bin >> pk_y_bin >> r_x_bin >> r_y_bin;
+        file >> message_bin >> pk_x_bin >> pk_y_bin >> r_x_bin >> r_y_bin >> S_bin;
         pb.ss[i].fill_with_bits(pb, from_binary_string(S_bin));
         pb.ms[i].fill_with_bits(pb, from_binary_string(message_bin));
         pb.pk_x_bins[i].fill_with_bits(pb, from_binary_string(pk_x_bin));

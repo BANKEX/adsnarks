@@ -20,9 +20,9 @@ int main() {
     proof_dump >> proof;
 
     std::ifstream file("../keys/signature");
-    std::string S_bin, message_bin, pk_x_bin, pk_y_bin, r_x_bin, r_y_bin, pk;
+    std::string message_bin, pk_x_bin, pk_y_bin, r_x_bin, r_y_bin, S_bin, pk;
     for (size_t i = 0; i < n; i++) {
-        file >> S_bin >> message_bin >> pk_x_bin >> pk_y_bin >> r_x_bin >> r_y_bin;
+        file >> message_bin >> pk_x_bin >> pk_y_bin >> r_x_bin >> r_y_bin >> S_bin;;
         pk += pk_x_bin + pk_y_bin;
     }
 
