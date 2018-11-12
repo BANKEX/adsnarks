@@ -1,3 +1,5 @@
+import sys
+
 from sapling_utils import i2lebsp
 from ed25519 import publickey, signature, checkvalid
 from random import randint
@@ -18,14 +20,15 @@ def sign(value, sk):
     return R, S
 
 if __name__ == "__main__":
-    values = [123, 345, 567]
+    n = int(sys.argv[1])
+    values = [randint(0, 2**16) for _ in range(n)]
     with open('keys/signature', 'w') as f:
         for value in values:
             sk, pk = keypair()
             R, S = sign(value, sk)
-            print(toBinaryString(S)[::-1], file = f)
             print(toBinaryString(value), file = f)
             print(toBinaryString(pk[0]), file = f)
             print(toBinaryString(pk[1]), file = f)
             print(toBinaryString(R[0]), file = f)
             print(toBinaryString(R[1]), file = f)
+            print(toBinaryString(S)[::-1], file = f)
