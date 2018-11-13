@@ -73,6 +73,6 @@ namespace ethsnarks {
             packers[i].generate_r1cs_witness_from_bits();
         }
 
-        _median_gadget->generate_r1cs_witness(1); //TODO!!!
+        _median_gadget->generate_r1cs_witness(0); //TODO!!!
     }
 }
