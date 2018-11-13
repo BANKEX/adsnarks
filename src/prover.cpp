@@ -44,7 +44,9 @@ int main() {
     std::ofstream proof_dump("../keys/libsnark/proof");
     proof_dump << proof;
 
-    ethsnarks::proof2json_file(proof, pb.primary_input(), "../keys/ethsnarks/proof.json");
+    std::ofstream proof_json_dump("../keys/ethsnarks/proof.json");
+    ethsnarks::PrimaryInputT primary_input = pb.primary_input();
+    proof_json_dump << ethsnarks::proof_to_json(proof, primary_input);
 
     return 0;
 }
