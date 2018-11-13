@@ -40,10 +40,11 @@ More precisely, it:
 
 TODO items:
 1. For MVP (n-of-n signature)
-    1. ethsnarks: bump solidity version, add proof.json export, and update the submodule
+    1. ~~ethsnarks: bump solidity version, add proof.json export, and update the submodule~~
     2. libff doesn't provide inequality operators for field elements, so the easiest way to find the median is to hint the 
 prover with the median index from outside (currently it's hardcoded) 
     3. n = 3 is hardcoded in generator/proover/verifier
+    4. check that pk and vk match
 2. Circuit enhancements
     1. support m-of-n case. For that one should add a flag to eddsa gadget and condition 
     some constraints on that flag
