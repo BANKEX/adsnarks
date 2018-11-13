@@ -3,3 +3,4 @@ cmake-build-debug
 bin
 build
 src/eddsa/__pycache__
+keys/libsnark
