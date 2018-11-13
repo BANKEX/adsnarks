@@ -19,6 +19,17 @@ def sign(value, sk):
     checkvalid(R, S, m, pk)
     return R, S
 
+def verify(value, R, S, pk):
+    m = hex(int(toBinaryString(value), 2))[2:]
+    try:
+        checkvalid(R, S, m, pk)
+        return True
+    except Exception as e:
+        if e.args == "signature does not pass verification":
+            return True
+        raise e
+
+
 if __name__ == "__main__":
     n = int(sys.argv[1])
     values = [randint(0, 2**16) for _ in range(n)]
