@@ -9,4 +9,4 @@ if __name__ == "__main__":
     parser.add_argument("sk", help="secret key")
     args = parser.parse_args()
     R, S = sign(args.value, args.sk)
-    print(json.dumps({"R": R, "S": S}))
+    print(json.dumps({"R": list(map(str, R)), "S": str(S)}))
