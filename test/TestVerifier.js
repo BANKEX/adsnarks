@@ -2,10 +2,6 @@ const utils = require('./utils.js');
 
 const TestContract = artifacts.require('TestContract');
 
-let list_flatten = (l) => {
-    return [].concat.apply([], l);
-};
-
 
 contract("TestContract", () => {
 
