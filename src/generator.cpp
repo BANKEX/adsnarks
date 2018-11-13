@@ -2,10 +2,11 @@
 #include "circuit/oracle_protoboard.hpp"
 #include <export.hpp>
 
-int main() {
-    ethsnarks::ppT::init_public_params();
+int main(int argc, char *argv[]) {
 
-    const size_t n = 3; //TODO: hardcoded
+    const size_t n = static_cast<size_t >(std::stoi(argv[1]));
+
+    ethsnarks::ppT::init_public_params();
 
     ethsnarks::oracle_protoboard pb(n);
 

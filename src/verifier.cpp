@@ -6,10 +6,11 @@
 #include <ethsnarks.hpp>
 #include "utils.cpp"
 
-int main() {
-    ethsnarks::ppT::init_public_params();
+int main(int argc, char *argv[]) {
 
-    const size_t n = 3;
+    const size_t n = static_cast<size_t >(std::stoi(argv[1]));
+
+    ethsnarks::ppT::init_public_params();
 
     libsnark::r1cs_gg_ppzksnark_zok_verification_key<ethsnarks::ppT> vk;
     std::ifstream vk_dump("../keys/libsnark/vk");
