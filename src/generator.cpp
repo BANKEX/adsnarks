@@ -6,6 +6,10 @@ int main(int argc, char *argv[]) {
 
     const size_t n = static_cast<size_t >(std::stoi(argv[1]));
 
+    if (std::ifstream("../keys/libsnark/pk")) {
+        return 0;
+    }
+
     ethsnarks::ppT::init_public_params();
 
     ethsnarks::oracle_protoboard pb(n);
