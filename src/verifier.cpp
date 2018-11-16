@@ -13,14 +13,14 @@ int main(int argc, char *argv[]) {
     ethsnarks::ppT::init_public_params();
 
     libsnark::r1cs_gg_ppzksnark_zok_verification_key<ethsnarks::ppT> vk;
-    std::ifstream vk_dump("../keys/libsnark/vk");
+    std::ifstream vk_dump(absolute_path("keys/libsnark/vk"));
     vk_dump >> vk;
 
     libsnark::r1cs_gg_ppzksnark_zok_proof<ethsnarks::ppT> proof;
-    std::ifstream proof_dump("../keys/libsnark/proof");
+    std::ifstream proof_dump(absolute_path("keys/libsnark/proof"));
     proof_dump >> proof;
 
-    std::ifstream file("../keys/signature");
+    std::ifstream file(absolute_path("keys/signature"));
     std::string message_bin, pk_x_bin, pk_y_bin, r_x_bin, r_y_bin, S_bin, pk;
     for (size_t i = 0; i < n; i++) {
         file >> message_bin >> pk_x_bin >> pk_y_bin >> r_x_bin >> r_y_bin >> S_bin;;

@@ -13,7 +13,13 @@ int main(int argc, char *argv[]) {
 
     pb.generate_r1cs_constraints();
 
-    std::ifstream file("../keys/signature");
+    const std::string &signaturePath = absolute_path("keys/signature");
+    std::ifstream file(signaturePath);
+    if (!file) {
+        std::cerr << signaturePath << " is missing" << std::endl;
+        return 1;
+    }
+    
     std::string message_bin, pk_x_bin, pk_y_bin, r_x_bin, r_y_bin, S_bin;
     for (size_t i = 0; i < n; i++) {
         file >> message_bin >> pk_x_bin >> pk_y_bin >> r_x_bin >> r_y_bin >> S_bin;
@@ -30,7 +36,7 @@ int main(int argc, char *argv[]) {
     assert(pb.is_satisfied());
 
     libsnark::r1cs_gg_ppzksnark_zok_proving_key<ethsnarks::ppT> pk;
-    std::ifstream pk_dump("../keys/libsnark/pk");
+    std::ifstream pk_dump(absolute_path("keys/libsnark/pk"));
     pk_dump >> pk;
 
     libff::print_header("R1CS GG-ppzkSNARK Prover");
@@ -42,10 +48,10 @@ int main(int argc, char *argv[]) {
     std::cout << "Median: " << pb.val(pb.median) << std::endl;
     std::cout << "Total constraints: " << pb.num_constraints() << std::endl;
 
-    std::ofstream proof_dump("../keys/libsnark/proof");
+    std::ofstream proof_dump(absolute_path("keys/libsnark/proof"));
     proof_dump << proof;
 
-    std::ofstream proof_json_dump("../keys/ethsnarks/proof.json");
+    std::ofstream proof_json_dump(absolute_path("keys/ethsnarks/proof.json"));
     ethsnarks::PrimaryInputT primary_input = pb.primary_input();
     proof_json_dump << ethsnarks::proof_to_json(proof, primary_input);
 

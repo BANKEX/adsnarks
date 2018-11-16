@@ -1,4 +1,4 @@
-import argparse
+import argparse, os.path
 
 from generate import toBinaryString, verify
 
@@ -10,8 +10,7 @@ if __name__ == "__main__":
     parser.add_argument("S", help="scalar part of the signature", type=int)
     parser.add_argument("pk", help="public key", type=int, nargs=2)
     args = parser.parse_args()
-    print(args)
-    with open('keys/signature', 'w') as f:
+    with open(os.path.join(os.path.dirname(__file__), '../../keys/signature'), 'w') as f:
         print(toBinaryString(args.value), file = f)
         print(toBinaryString(args.pk[0]), file = f)
         print(toBinaryString(args.pk[1]), file = f)

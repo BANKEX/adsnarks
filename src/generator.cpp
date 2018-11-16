@@ -1,12 +1,14 @@
 #include <fstream>
 #include "circuit/oracle_protoboard.hpp"
 #include <export.hpp>
+#include "utils.cpp"
 
 int main(int argc, char *argv[]) {
 
     const size_t n = static_cast<size_t >(std::stoi(argv[1]));
 
-    if (std::ifstream("../keys/libsnark/pk")) {
+    std::string pk_in_path = absolute_path("keys/libsnark/pk");
+    if (std::ifstream(pk_in_path)) {
         return 0;
     }
 
@@ -24,13 +26,13 @@ int main(int argc, char *argv[]) {
 
     std::cout << "Total constraints: " << pb.num_constraints() << std::endl;
 
-    std::ofstream pk_dump("../keys/libsnark/pk");
+    std::ofstream pk_dump(absolute_path("keys/libsnark/pk"));
     pk_dump << keypair.pk;
 
-    std::ofstream vk_dump("../keys/libsnark/vk");
+    std::ofstream vk_dump(absolute_path("keys/libsnark/vk"));
     vk_dump << keypair.vk;
 
-    ethsnarks::vk2json_file(keypair.vk, "../keys/ethsnarks/vk.json");
+    ethsnarks::vk2json_file(keypair.vk, absolute_path("keys/ethsnarks/vk.json"));
 
     return 0;
 }
