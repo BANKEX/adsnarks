@@ -1,3 +1,5 @@
+const {resolve} = require("path");
+
 const flatten_list = (l) => {
     return [].concat.apply([], l);
 };
@@ -20,4 +22,9 @@ exports.flatten_proof = (proof) => {
         flatten_list(proof.B),
         proof.C
     ]);
+};
+
+// converts the path relative to the project root to the absolute path
+exports.fromProjectRoot = (relativePath) => {
+    return resolve(__dirname, '..', relativePath);
 };
