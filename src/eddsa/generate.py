@@ -25,10 +25,17 @@ def verify(value, R, S, pk):
         checkvalid(R, S, m, pk)
         return True
     except Exception as e:
-        if e.args == "signature does not pass verification":
-            return True
+        if e.args[0] == "signature does not pass verification":
+            return False
         raise e
 
+def represent(value, pk, R, S):
+    return (toBinaryString(value),
+            toBinaryString(pk[0]),
+            toBinaryString(pk[1]),
+            toBinaryString(R[0]),
+            toBinaryString(R[1]),
+            toBinaryString(S)[::-1])
 
 if __name__ == "__main__":
     n = int(sys.argv[1])
@@ -37,9 +44,5 @@ if __name__ == "__main__":
         for value in values:
             sk, pk = keypair()
             R, S = sign(value, sk)
-            print(toBinaryString(value), file = f)
-            print(toBinaryString(pk[0]), file = f)
-            print(toBinaryString(pk[1]), file = f)
-            print(toBinaryString(R[0]), file = f)
-            print(toBinaryString(R[1]), file = f)
-            print(toBinaryString(S)[::-1], file = f)
+            for s in represent(value, pk, R, S):
+                print(s, file = f)
