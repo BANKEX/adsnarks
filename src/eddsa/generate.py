@@ -38,7 +38,7 @@ def represent(value, pk, R, S):
             toBinaryString(S)[::-1])
 
 if __name__ == "__main__":
-git pu    n = int(sys.argv[1])
+    n = int(sys.argv[1])
     values = [randint(0, 2**16) for _ in range(n)]
     with open('keys/signature', 'w') as f:
         for value in values:
