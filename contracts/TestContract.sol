@@ -44,11 +44,10 @@ contract TestContract
 
     // TODO: onlyOracle?
     function UpdateMedian(uint256 _median, uint256[8] in_proof) public {
-        uint256[] memory proof_inputs = new uint256[](4);
+        uint256[] memory proof_inputs = new uint256[](3);
         proof_inputs[0] = _median;
-        proof_inputs[1] = pk_x << 3 >> 3;
-        proof_inputs[2] = pk_x >> 253 | pk_y << 6 >> 3;
-        proof_inputs[3] = pk_y >> 250;
+        proof_inputs[1] = pk_x;
+        proof_inputs[2] = pk_y;
         require(Verifier.Verify(m_vk, m_gammaABC, in_proof, proof_inputs));
         median = _median;
     }
