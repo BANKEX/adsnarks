@@ -9,38 +9,28 @@ namespace ethsnarks {
     oracle_gadget::oracle_gadget(ProtoboardT &pb,
                                  const size_t n,
                                  const VariableT &median,
-                                 const std::vector<VariableArrayT> &pk_x_bins,
-                                 const std::vector<VariableArrayT> &pk_y_bins,
-                                 const std::vector<VariableArrayT> &r_x_bins,
-                                 const std::vector<VariableArrayT> &r_y_bins,
+                                 const jubjub::EdwardsPoint &base,
+                                 const std::vector<jubjub::VariablePointT> &As,
+                                 const std::vector<jubjub::VariablePointT> &Rs,
                                  const std::vector<VariableArrayT> &ss,
                                  const std::vector<VariableArrayT> &ms) :
             gadget<FieldT>(pb, "oracle_gadget"),
             n(n),
             median(median),
-            pk_x_bins(pk_x_bins),
-            pk_y_bins(pk_y_bins),
-            r_x_bins(r_x_bins),
-            r_y_bins(r_y_bins),
+            As(As),
+            Rs(Rs),
             ss(ss),
             ms(ms) {
         assert(n > 0);
         assert(n % 2 == 1);
-        assert(pk_x_bins.size() == n);
-        assert(pk_y_bins.size() == n);
-        assert(r_x_bins.size() == n);
-        assert(r_y_bins.size() == n);
+        assert(As.size() == n);
+        assert(Rs.size() == n);
         assert(ss.size() == n);
         assert(ms.size() == n);
 
-        a.allocate(pb, "a");
-        d.allocate(pb, "d");
-        base_x.allocate(pb, "base x");
-        base_y.allocate(pb, "base y");
-        
         for (size_t i = 0; i < n; i++) {
             signature_verifiers.emplace_back(
-                    jubjub::eddsa<HashT>(pb, params, a, d, pk_x_bins[i], pk_y_bins[i], base_x, base_y, r_x_bins[i], r_y_bins[i],ms[i], ss[i]));
+                    jubjub::EdDSA_Verify(pb, params, base, As[i], Rs[i], ss[i], ms[i], FMT(this->annotation_prefix, ".signature_verifier_%zu", i)));
         }
 
         for (size_t i = 0; i < n; i++) {
@@ -62,12 +52,6 @@ namespace ethsnarks {
     }
 
     void oracle_gadget::generate_r1cs_witness() {
-        // TODO: reuse params
-        this->pb.val(a) = FieldT("168700");
-        this->pb.val(d) = FieldT("168696");
-        this->pb.val(base_x) = FieldT("17777552123799933955779906779655732241715742912184938656739573121738514868268");
-        this->pb.val(base_y) = FieldT("2626589144620713026669568689430873010625803728049924121243784502389097019475");
-
         for (size_t i = 0; i < n; i++) {
             signature_verifiers[i].generate_r1cs_witness();
             packers[i].generate_r1cs_witness_from_bits();

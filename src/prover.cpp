@@ -20,15 +20,15 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     
-    std::string message_bin, pk_x_bin, pk_y_bin, r_x_bin, r_y_bin, S_bin;
+    std::string m, Ax, Ay, Rx, Ry, s;
     for (size_t i = 0; i < n; i++) {
-        file >> message_bin >> pk_x_bin >> pk_y_bin >> r_x_bin >> r_y_bin >> S_bin;
-        pb.ss[i].fill_with_bits(pb, from_binary_string(S_bin));
-        pb.ms[i].fill_with_bits(pb, from_binary_string(message_bin));
-        pb.pk_x_bins[i].fill_with_bits(pb, from_binary_string(pk_x_bin));
-        pb.pk_y_bins[i].fill_with_bits(pb, from_binary_string(pk_y_bin));
-        pb.r_x_bins[i].fill_with_bits(pb, from_binary_string(r_x_bin));
-        pb.r_y_bins[i].fill_with_bits(pb, from_binary_string(r_y_bin));
+        file >> m >> Ax >> Ay >> Rx >> Ry >> s;
+        pb.ms[i].fill_with_bits(pb, from_binary_string(m));
+        pb.val(pb.As[i].x) = ethsnarks::FieldT(Ax.c_str());
+        pb.val(pb.As[i].y) = ethsnarks::FieldT(Ay.c_str());
+        pb.val(pb.Rs[i].x) = ethsnarks::FieldT(Rx.c_str());
+        pb.val(pb.Rs[i].y) = ethsnarks::FieldT(Ry.c_str());
+        pb.ss[i].fill_with_bits_of_field_element(pb, ethsnarks::FieldT(s.c_str()));
     }
 
     pb.generate_r1cs_witness();

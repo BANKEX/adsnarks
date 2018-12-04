@@ -9,6 +9,7 @@ int main(int argc, char *argv[]) {
 
     std::string pk_in_path = absolute_path("keys/libsnark/pk");
     if (std::ifstream(pk_in_path)) {
+        std::cout << pk_in_path << " is already present" << std::endl;
         return 0;
     }
 

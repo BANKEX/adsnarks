@@ -20,17 +20,17 @@ int main(int argc, char *argv[]) {
     std::ifstream proof_dump(absolute_path("keys/libsnark/proof"));
     proof_dump >> proof;
 
-    std::ifstream file(absolute_path("keys/signature"));
-    std::string message_bin, pk_x_bin, pk_y_bin, r_x_bin, r_y_bin, S_bin, pk;
-    for (size_t i = 0; i < n; i++) {
-        file >> message_bin >> pk_x_bin >> pk_y_bin >> r_x_bin >> r_y_bin >> S_bin;;
-        pk += pk_x_bin + pk_y_bin;
-    }
-
     std::vector<ethsnarks::FieldT> public_input;
-    public_input.emplace_back(345); //TODO
-    for (auto b : libff::pack_bit_vector_into_field_element_vector<ethsnarks::FieldT>(from_binary_string(pk))) {
-        public_input.emplace_back(b);
+
+    std::ifstream file(absolute_path("keys/signature"));
+    std::string m, Ax, Ay, Rx, Ry, s;
+    for (size_t i = 0; i < n; i++) {
+        file >> m >> Ax >> Ay >> Rx >> Ry >> s;
+        if (i == 0) { //TODO: median
+            public_input.emplace_back(libff::convert_bit_vector_to_field_element<ethsnarks::FieldT>(from_binary_string(m)));
+        }
+        public_input.emplace_back(ethsnarks::FieldT(Ax.c_str()));
+        public_input.emplace_back(ethsnarks::FieldT(Ay.c_str()));
     }
 
     libff::print_header("R1CS GG-ppzkSNARK Verifier");
