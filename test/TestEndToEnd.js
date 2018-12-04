@@ -1,4 +1,4 @@
-const { fromProjectRoot, flatten_vk, flatten_proof } = require('./utils.js');
+const { fromProjectRoot, flatten_vk, flatten_proof, python3 } = require('./utils.js');
 const assert = require('assert').strict;
 const { spawnSync } = require('child_process');
 
@@ -27,7 +27,7 @@ const contract = await TestContract.new(...flatten_vk(vk));
 
 
 console.log('3. A data provider generates a key pair and sends the public key to the Oracle');
-const keypairProc = spawnSync('python3', [fromProjectRoot('src/eddsa/keypair.py')]);
+const keypairProc = python3('src/eddsa/keypair.py');
 console.log('keypair = ' + keypairProc.stdout.toString());
 if (keypairProc.status !== 0) {
     console.log("keypair.py:\n" + keypairProc.stderr.toString());
@@ -38,13 +38,13 @@ const keypair = JSON.parse(keypairProc.stdout.toString());
 
 
 console.log('4. The oracle submits the public key to the contract');
-await contract.setPublicKey(keypair.public_key[0], keypair.public_key[1]);
+await contract.setPublicKey(keypair.A[0], keypair.A[1]);
 
 
 
 console.log('5. The data provider generates a new value, signs it, and sends the value together with the signature to the oracle');
 const value = 123;
-const signProc = spawnSync('python3', [fromProjectRoot('src/eddsa/sign.py'), value, keypair.secret_key]);
+const signProc = python3('src/eddsa/sign.py', value, keypair.k);
 console.log('signature = ' + signProc.stdout.toString());
 if (signProc.status !== 0) {
     console.log("sign.py:\n" + signProc.stderr.toString());
@@ -55,8 +55,7 @@ const signature = JSON.parse(signProc.stdout.toString());
 
 
 console.log('6. The oracle converts the signature to the libsnark format and feeds it to the prover');
-const convertProc = spawnSync('python3', [fromProjectRoot('src/eddsa/convert.py'),
-    value, signature.R[0], signature.R[1], signature.S, keypair.public_key[0], keypair.public_key[1]]);
+const convertProc = python3('src/eddsa/convert.py', value, signature.R[0], signature.R[1], signature.S, keypair.A[0], keypair.A[1]);
 if (convertProc.status !== 0) {
     console.log("convert.py:\n" + convertProc.stderr.toString());
 }

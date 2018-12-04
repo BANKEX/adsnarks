@@ -1,4 +1,5 @@
 const {resolve} = require("path");
+const {spawnSync} = require('child_process');
 
 const flatten_list = (l) => {
     return [].concat.apply([], l);
@@ -28,3 +29,7 @@ exports.flatten_proof = (proof) => {
 exports.fromProjectRoot = (relativePath) => {
     return resolve(__dirname, '..', relativePath);
 };
+
+const spawnOptions = {env: {PYTHONPATH: exports.fromProjectRoot('depends/ethsnarks')}};
+
+exports.python3 = (script, ...args) => spawnSync('python3', [exports.fromProjectRoot(script), ...args], spawnOptions);
